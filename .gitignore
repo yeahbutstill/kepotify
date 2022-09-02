@@ -1,2 +1,4 @@
 /.idea
 /kepotifydb-data
+/target
+/.gitignore
