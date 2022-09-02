@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Map;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -31,7 +31,7 @@ public class UserController {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
-                        .data(Map.of("users", userService.list(10)))
+                        .data(userService.list(10))
                         .message("Users Retrieved")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
@@ -46,7 +46,7 @@ public class UserController {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
-                        .data(Map.of("user", userService.create(users)))
+                        .data(Collections.singletonList(userService.create(users)))
                         .message("User Created")
                         .status(HttpStatus.CREATED)
                         .statusCode(HttpStatus.CREATED.value())
@@ -61,7 +61,7 @@ public class UserController {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
-                        .data(Map.of("user", userService.get(id)))
+                        .data(Collections.singletonList(userService.get(id)))
                         .message("User Retrieved")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
@@ -76,7 +76,7 @@ public class UserController {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
-                        .data(Map.of("deleted", userService.delete(id)))
+                        .data(Collections.singletonList(userService.delete(id)))
                         .message("User Deleted")
                         .status(HttpStatus.OK)
                         .statusCode(HttpStatus.OK.value())
