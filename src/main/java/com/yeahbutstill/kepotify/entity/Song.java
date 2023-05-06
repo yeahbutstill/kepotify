@@ -1,52 +1,67 @@
 package com.yeahbutstill.kepotify.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import java.util.Set;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "songs")
 public class Song extends BaseEntity {
 
-    @NotBlank
-    @NotEmpty
     private String title;
 
-    @NotBlank
-    @NotEmpty
     private Integer duration;
 
-    @ManyToMany
-    @JoinTable(
-            name = "contains",
-            joinColumns = @JoinColumn(name = "song_id"),
-            inverseJoinColumns = @JoinColumn(name = "playlist_id")
-    )
-    private Set<Playlist> containsPlaylists;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "contains",
+//            joinColumns = @JoinColumn(name = "song_id"),
+//            inverseJoinColumns = @JoinColumn(name = "playlist_id")
+//    )
+//    @ToString.Exclude
+//    private Set<Playlist> containsPlaylists;
 
-    @ManyToMany
-    @JoinTable(
-            name = "sing",
-            joinColumns = @JoinColumn(name = "song_id"),
-            inverseJoinColumns = @JoinColumn(name = "artist_id")
-    )
-    private Set<Artist> singArtists;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "sing",
+//            joinColumns = @JoinColumn(name = "song_id"),
+//            inverseJoinColumns = @JoinColumn(name = "artist_id")
+//    )
+//    @ToString.Exclude
+//    private Set<Artist> singArtists;
 
-    @ManyToMany(mappedBy = "likeSongs")
-    private Set<Users> users;
+//    @ManyToMany(mappedBy = "likeSongs")
+//    @ToString.Exclude
+//    private Set<Users> users;
+
     @ManyToOne
-    @JoinColumn(name = "album_id")
-    @NotBlank
-    @NotEmpty
+    @JoinColumn(
+            name = "album_id",
+            referencedColumnName = "id"
+    )
     private Album album;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Song song = (Song) o;
+        return getId() != null && Objects.equals(getId(), song.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

@@ -1,19 +1,18 @@
 package com.yeahbutstill.kepotify.entity;
 
+import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
-@Entity
+//@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

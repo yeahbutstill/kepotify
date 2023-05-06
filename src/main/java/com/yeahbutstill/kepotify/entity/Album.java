@@ -1,44 +1,52 @@
 package com.yeahbutstill.kepotify.entity;
 
 import com.yeahbutstill.kepotify.helpers.YearAttributeConverter;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.time.Year;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "albums")
 public class Album extends BaseEntity {
 
-    @NotBlank
-    @NotEmpty
     private String title;
 
-    @NotBlank
-    @NotEmpty
+    @Lob
     private String image;
 
-    @NotBlank
-    @NotEmpty
     @Convert(converter = YearAttributeConverter.class)
     private Year release;
 
     @ManyToMany(mappedBy = "hasAlbums")
+    @ToString.Exclude
     private Set<Artist> artists;
 
     @OneToMany(mappedBy = "album")
-    private Set<Song> containsSongs;
+    @ToString.Exclude
+    private List<Song> songs;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Album album = (Album) o;
+        return getId() != null && Objects.equals(getId(), album.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
 }

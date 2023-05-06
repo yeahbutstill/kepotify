@@ -1,24 +1,24 @@
 package com.yeahbutstill.kepotify.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import java.util.Objects;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@SQLDelete(sql = "UPDATE artist SET status_record='INACTIVE' WHERE id=?")
-@Where(clause = "status_record='ACTIVE'")
+@Table(name = "artists")
+//@SQLDelete(sql = "UPDATE artist SET status_record='INACTIVE' WHERE id=?")
+//@Where(clause = "status_record='ACTIVE'")
 public class Artist extends BaseEntity {
 
     @NotEmpty
@@ -35,24 +35,40 @@ public class Artist extends BaseEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "hasAlbum",
-            joinColumns = @JoinColumn(name = "artist_id"),
-            inverseJoinColumns = @JoinColumn(name = "album_id")
+            name = "has_artist_albums",
+            joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id")
     )
+    @ToString.Exclude
     private Set<Album> hasAlbums;
 
-    @ManyToMany
-    @JoinTable(
-            name = "perform",
-            joinColumns = @JoinColumn(name = "artist_id"),
-            inverseJoinColumns = @JoinColumn(name = "concert_id")
-    )
-    private Set<Concert> performs;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "perform",
+//            joinColumns = @JoinColumn(name = "artist_id"),
+//            inverseJoinColumns = @JoinColumn(name = "concert_id")
+//    )
+//    @ToString.Exclude
+//    private Set<Concert> performs;
+//
+//    @ManyToMany(mappedBy = "followArtists")
+//    @ToString.Exclude
+//    private Set<Users> follow;
+//
+//    @ManyToMany(mappedBy = "singArtists")
+//    @ToString.Exclude
+//    private Set<Song> sing;
 
-    @ManyToMany(mappedBy = "followArtists")
-    private Set<Users> follow;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Artist artist = (Artist) o;
+        return getId() != null && Objects.equals(getId(), artist.getId());
+    }
 
-    @ManyToMany(mappedBy = "singArtists")
-    private Set<Song> sing;
-
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

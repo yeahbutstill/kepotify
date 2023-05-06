@@ -1,0 +1,31 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+<!--    biasa name disini adalah name applikasinya-->
+    <persistence-unit name="KEPO">
+
+<!--        karena disini menggunakan hibernate ORM-->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+<!--        walaupun sebenernya tidak wajib, tapi JPA merekomendasikan selalu ditambahkan,-->
+<!--        biar proses pembacaan entitynya dilakukan diawal ketika aplikasi dijalankan si entity manager factory-->
+<!--        karena kalau tidak ditambahkan diawal nanti pembacaan entitynya itu dilakukan ketika memanggil entitynya,-->
+<!--        jadi itu akan menjadi prosesnya lebih lambat-->
+        <!-- Entity Classes -->
+        <class>com.yeahbutstill.kepotify.entity.Song</class>
+        <class>com.yeahbutstill.kepotify.entity.Album</class>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5431/kepotifydb"/>
+            <property name="jakarta.persistence.jdbc.user" value="kepotify"/>
+            <property name="jakarta.persistence.jdbc.password" value="PNSJkxXvVNDAhePMuExTBuRR"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

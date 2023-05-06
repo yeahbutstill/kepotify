@@ -1,16 +1,14 @@
 package com.yeahbutstill.kepotify.entity;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 @Data
-@Entity
+//@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

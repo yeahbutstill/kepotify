@@ -3,12 +3,12 @@ package com.yeahbutstill.kepotify.controller;
 import com.yeahbutstill.kepotify.entity.Response;
 import com.yeahbutstill.kepotify.entity.Users;
 import com.yeahbutstill.kepotify.service.impl.UserServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
