@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.Arrays;
@@ -182,23 +181,58 @@ class ArtisAlbumSongTest {
     }
 
     @Test
-    void testArtistPerforms() {
+    void testInsertConcerts() {
 
         EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Concert concert = new Concert();
-        concert.setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-        concert.setEventAt(LocalDateTime.now());
-        concert.setLocation("Jakarta");
-        concert.setLon(-6.17);
-        concert.setLat(106.8);
+        Concert concert1 = new Concert();
+        concert1.setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        concert1.setEventAt(LocalDateTime.now());
+        concert1.setLocation("Jakarta");
+        concert1.setLon(-6.17);
+        concert1.setLat(106.8);
 
-        Assertions.assertNotNull(concert);
+        Concert concert2 = new Concert();
+        concert2.setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        concert2.setEventAt(LocalDateTime.now());
+        concert2.setLocation("Jakarta");
+        concert2.setLon(-6.17);
+        concert2.setLat(106.8);
 
-        entityManager.persist(concert);
+        Assertions.assertNotNull(concert1);
+        Assertions.assertNotNull(concert2);
+
+        entityManager.persist(concert1);
+        entityManager.persist(concert2);
+
+        transaction.commit();
+        entityManager.close();
+
+    }
+
+
+    @Test
+    void testInsertArtistPerforms() {
+
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        Artist artist = entityManager.find(Artist.class, UUID.fromString("3867b2b0-90fb-4e35-b61f-c409226c518c"));
+        artist.setPerforms(new HashSet<>());
+
+        Concert concert1 = entityManager.find(Concert.class, UUID.fromString("fb237c85-b302-42c3-9407-660344c8cfc2"));
+        Concert concert2 = entityManager.find(Concert.class, UUID.fromString("899a05b4-1dd6-4f04-9378-455a5bf0dac9"));
+
+        artist.getPerforms().add(concert1);
+        artist.getPerforms().add(concert2);
+        Assertions.assertNotNull(artist.getPerforms());
+
+        entityManager.merge(artist);
 
         transaction.commit();
         entityManager.close();
