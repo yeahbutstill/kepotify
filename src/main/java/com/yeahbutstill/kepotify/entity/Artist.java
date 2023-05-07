@@ -51,6 +51,15 @@ public class Artist extends BaseEntity {
     @ToString.Exclude
     private Set<Song> singSong;
 
+    @ManyToMany
+    @JoinTable(
+            name = "performs",
+            joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "concert_id", referencedColumnName = "id")
+    )
+    @ToString.Exclude
+    private Set<Concert> performs;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

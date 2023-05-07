@@ -2,6 +2,7 @@ package com.yeahbutstill.kepotify;
 
 import com.yeahbutstill.kepotify.entity.Album;
 import com.yeahbutstill.kepotify.entity.Artist;
+import com.yeahbutstill.kepotify.entity.Concert;
 import com.yeahbutstill.kepotify.entity.Song;
 import com.yeahbutstill.kepotify.utils.JpaUtil;
 import jakarta.persistence.EntityManager;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -155,7 +158,47 @@ class ArtisAlbumSongTest {
         artist.getSingSong().add(song4);
         Assertions.assertNotNull(artist.getSingSong());
 
-        entityManager.persist(artist);
+        entityManager.merge(artist);
+
+        transaction.commit();
+        entityManager.close();
+
+    }
+
+    @Test
+    void testFetchArtisHasAlbums() {
+
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        Song song = entityManager.find(Song.class, UUID.fromString("cb4ca109-3eee-4d9b-884b-875a52d0cecd"));
+        Assertions.assertNotNull(song.getAlbum());
+
+        transaction.commit();
+        entityManager.close();
+
+    }
+
+    @Test
+    void testArtistPerforms() {
+
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        Concert concert = new Concert();
+        concert.setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        concert.setEventAt(LocalDateTime.now());
+        concert.setLocation("Jakarta");
+        concert.setLon(-6.17);
+        concert.setLat(106.8);
+
+        Assertions.assertNotNull(concert);
+
+        entityManager.persist(concert);
 
         transaction.commit();
         entityManager.close();

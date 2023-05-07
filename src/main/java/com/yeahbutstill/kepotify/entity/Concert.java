@@ -1,21 +1,26 @@
 package com.yeahbutstill.kepotify.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
-@Data
-//@Entity
+@Getter
+@Setter
+@ToString
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "concerts")
 public class Concert extends BaseEntity {
 
     @NotEmpty
@@ -25,8 +30,7 @@ public class Concert extends BaseEntity {
     private Double lon;
     private Double lat;
 
-    @NotEmpty
-    @NotBlank
+    @Column(name = "event_at")
     private LocalDateTime eventAt;
 
     @NotEmpty
@@ -34,6 +38,19 @@ public class Concert extends BaseEntity {
     private String url;
 
     @ManyToMany(mappedBy = "performs")
+    @ToString.Exclude
     private Set<Artist> artists;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Concert concert = (Concert) o;
+        return getId() != null && Objects.equals(getId(), concert.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

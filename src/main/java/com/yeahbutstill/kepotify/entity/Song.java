@@ -24,11 +24,12 @@ public class Song extends BaseEntity {
     @ToString.Exclude
     private Set<Artist> artists;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "album_id",
             referencedColumnName = "id"
     )
+    @ToString.Exclude
     private Album album;
 
     @Override
