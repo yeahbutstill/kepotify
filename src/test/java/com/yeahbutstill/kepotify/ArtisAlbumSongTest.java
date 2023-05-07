@@ -99,6 +99,7 @@ class ArtisAlbumSongTest {
 
         artist.getHasAlbums().add(album1);
         artist.getHasAlbums().add(album2);
+        Assertions.assertNotNull(artist.getHasAlbums());
 
         entityManager.merge(artist);
 
@@ -116,9 +117,45 @@ class ArtisAlbumSongTest {
         transaction.begin();
 
         Artist artist = entityManager.find(Artist.class, UUID.fromString("3867b2b0-90fb-4e35-b61f-c409226c518c"));
-        artist.getHasAlbums().forEach(album -> {
-            System.out.println(album.getTitle());
-        });
+        Album album = null;
+
+        for (Album item : artist.getHasAlbums()) {
+            album = item;
+            break;
+        }
+
+        artist.getHasAlbums().remove(album);
+        entityManager.merge(artist);
+        Assertions.assertNotNull(artist.getHasAlbums());
+
+        transaction.commit();
+        entityManager.close();
+
+    }
+
+    @Test
+    void testSingSong() {
+
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        Artist artist = entityManager.find(Artist.class, UUID.fromString("3867b2b0-90fb-4e35-b61f-c409226c518c"));
+        artist.setSingSong(new HashSet<>());
+
+        Song song1 = entityManager.find(Song.class, UUID.fromString("cb4ca109-3eee-4d9b-884b-875a52d0cecd"));
+        Song song2 = entityManager.find(Song.class, UUID.fromString("928f6f5a-b111-4879-ab7c-33b2fdd37344"));
+        Song song3 = entityManager.find(Song.class, UUID.fromString("a022c244-c493-43bd-9551-5070aacdb737"));
+        Song song4 = entityManager.find(Song.class, UUID.fromString("d4b179f2-696f-4c03-a184-ed101b895647"));
+
+        artist.getSingSong().add(song1);
+        artist.getSingSong().add(song2);
+        artist.getSingSong().add(song3);
+        artist.getSingSong().add(song4);
+        Assertions.assertNotNull(artist.getSingSong());
+
+        entityManager.persist(artist);
 
         transaction.commit();
         entityManager.close();

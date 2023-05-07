@@ -42,22 +42,14 @@ public class Artist extends BaseEntity {
     @ToString.Exclude
     private Set<Album> hasAlbums;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "perform",
-//            joinColumns = @JoinColumn(name = "artist_id"),
-//            inverseJoinColumns = @JoinColumn(name = "concert_id")
-//    )
-//    @ToString.Exclude
-//    private Set<Concert> performs;
-//
-//    @ManyToMany(mappedBy = "followArtists")
-//    @ToString.Exclude
-//    private Set<Users> follow;
-//
-//    @ManyToMany(mappedBy = "singArtists")
-//    @ToString.Exclude
-//    private Set<Song> sing;
+    @ManyToMany
+    @JoinTable(
+            name = "sings",
+            joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id")
+    )
+    @ToString.Exclude
+    private Set<Song> singSong;
 
     @Override
     public boolean equals(Object o) {

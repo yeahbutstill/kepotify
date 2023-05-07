@@ -1,13 +1,11 @@
 package com.yeahbutstill.kepotify.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,30 +18,11 @@ import java.util.Objects;
 public class Song extends BaseEntity {
 
     private String title;
-
     private Integer duration;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "contains",
-//            joinColumns = @JoinColumn(name = "song_id"),
-//            inverseJoinColumns = @JoinColumn(name = "playlist_id")
-//    )
-//    @ToString.Exclude
-//    private Set<Playlist> containsPlaylists;
-
-//    @ManyToMany
-//    @JoinTable(
-//            name = "sing",
-//            joinColumns = @JoinColumn(name = "song_id"),
-//            inverseJoinColumns = @JoinColumn(name = "artist_id")
-//    )
-//    @ToString.Exclude
-//    private Set<Artist> singArtists;
-
-//    @ManyToMany(mappedBy = "likeSongs")
-//    @ToString.Exclude
-//    private Set<Users> users;
+    @ManyToMany(mappedBy = "singSong")
+    @ToString.Exclude
+    private Set<Artist> artists;
 
     @ManyToOne
     @JoinColumn(
@@ -64,4 +43,5 @@ public class Song extends BaseEntity {
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }
