@@ -60,6 +60,9 @@ public class Artist extends BaseEntity {
     @ToString.Exclude
     private Set<Concert> performs;
 
+    @ManyToMany(mappedBy = "followArtist")
+    private Set<Users> userFollows;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

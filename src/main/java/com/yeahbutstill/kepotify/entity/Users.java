@@ -1,30 +1,27 @@
 package com.yeahbutstill.kepotify.entity;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 
-@Data
-//@Entity
+@Getter
+@Setter
+@ToString
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@SQLDelete(sql = "UPDATE users SET status_record='INACTIVE' WHERE id=?")
-@Where(clause = "status_record='ACTIVE'")
+@Table(name = "users")
+//@SQLDelete(sql = "UPDATE users SET status_record='INACTIVE' WHERE id=?")
+//@Where(clause = "status_record='ACTIVE'")
 public class Users extends BaseEntity {
 
     @NotEmpty
@@ -45,32 +42,23 @@ public class Users extends BaseEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "followArtists",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "artist_id")
+            name = "follows",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id")
     )
-    private Set<Artist> followArtists;
+    @ToString.Exclude
+    private Set<Artist> followArtist;
 
-    @ManyToMany
-    @JoinTable(
-            name = "followPlaylists",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "playlist_id")
-    )
-    private Set<Playlist> followPlaylists;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Users users = (Users) o;
+        return getId() != null && Objects.equals(getId(), users.getId());
+    }
 
-    @ManyToMany
-    @JoinTable(
-            name = "likeSongs",
-            joinColumns = @JoinColumn(name = "users_id"),
-            inverseJoinColumns = @JoinColumn(name = "song_id")
-    )
-    private Set<Song> likeSongs;
-
-    @OneToMany(mappedBy = "users")
-    private Set<Playlist> createPlaylists;
-
-    @OneToMany(mappedBy = "users")
-    private Set<Podcast> createPodcasts;
-
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
