@@ -62,6 +62,23 @@ class UsersFollowTest {
     }
 
     @Test
+    void testLoadUserDetails() {
+
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        Users users = entityManager.find(Users.class, UUID.fromString("9b1036a0-06ca-46da-99a1-e02c025d6629"));
+        Assertions.assertNotNull(users);
+        Assertions.assertEquals("Gara, gara@ya.ru, 1983-05-13", users.getUserDetails());
+
+        transaction.commit();
+        entityManager.close();
+
+    }
+
+    @Test
     void testUsersFollow() {
 
         EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();

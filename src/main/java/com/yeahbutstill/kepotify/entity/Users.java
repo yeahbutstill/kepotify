@@ -42,6 +42,14 @@ public class Users extends BaseEntity {
     @NotEmpty
     private String password;
 
+    @Transient
+    private String userDetails;
+
+    @PostLoad
+    public void postLoadUserDetails() {
+        this.userDetails = this.name + ", " + this.email + ", " + this.birthday;
+    }
+
     @ManyToMany
     @JoinTable(
             name = "follows",
