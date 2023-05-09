@@ -2,7 +2,7 @@
 small service spotify
 
 # Schema Database
-![](/home/yeahbutstill/IdeaProjects/kepotify/kepotify-0.png)
+![schemadatabase](kepotify-0.png)
 
 # Setup Docker
 ```shell
