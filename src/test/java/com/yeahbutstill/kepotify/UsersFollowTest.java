@@ -2,7 +2,7 @@ package com.yeahbutstill.kepotify;
 
 import com.yeahbutstill.kepotify.entity.Artist;
 import com.yeahbutstill.kepotify.entity.Users;
-import com.yeahbutstill.kepotify.enums.StatusRecord;
+import com.yeahbutstill.kepotify.enums.EnvironmentType;
 import com.yeahbutstill.kepotify.utils.JpaUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -25,12 +25,10 @@ class UsersFollowTest {
         transaction.begin();
 
         Users users = new Users();
-        users.setName("Maya");
-        users.setEmail("maya@ya.ru");
-        users.setPassword("maya");
-        users.setBirthday(LocalDate.of(1993, 9, 22));
-        users.setEnvironment("SIT");
-        users.setStatusRecord(StatusRecord.ACTIVE);
+        users.setName("Gara");
+        users.setEmail("gara@ya.ru");
+        users.setPassword("gara");
+        users.setBirthday(LocalDate.of(1983, 5, 13));
 
         Assertions.assertNotNull(users);
         entityManager.persist(users);
@@ -53,7 +51,7 @@ class UsersFollowTest {
         users.setEmail("naruto@ya.ru");
         users.setPassword("naruto");
         users.setBirthday(LocalDate.of(1980, 9, 1));
-        users.setEnvironment("SIT");
+        users.setEnvironment(EnvironmentType.UAT);
 
         Assertions.assertNotNull(users.getName());
         entityManager.merge(users);

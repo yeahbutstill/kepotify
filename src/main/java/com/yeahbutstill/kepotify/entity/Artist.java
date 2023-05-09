@@ -61,6 +61,7 @@ public class Artist extends BaseEntity {
     private Set<Concert> performs;
 
     @ManyToMany(mappedBy = "followArtist")
+    @ToString.Exclude
     private Set<Users> userFollows;
 
     @Override

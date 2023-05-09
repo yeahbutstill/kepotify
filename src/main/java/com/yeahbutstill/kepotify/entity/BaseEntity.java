@@ -1,11 +1,10 @@
 package com.yeahbutstill.kepotify.entity;
 
+import com.yeahbutstill.kepotify.enums.EnvironmentType;
 import com.yeahbutstill.kepotify.enums.StatusRecord;
 import com.yeahbutstill.kepotify.listener.UpdatedCreatedAtAware;
 import com.yeahbutstill.kepotify.listener.impl.UpdatedCreatedAtListener;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -51,9 +50,9 @@ public class BaseEntity implements UpdatedCreatedAtAware {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @NotBlank
-    @NotEmpty
-    private String environment;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private EnvironmentType environment = EnvironmentType.SIT;
 
     @NotNull
     @Enumerated(EnumType.STRING)
