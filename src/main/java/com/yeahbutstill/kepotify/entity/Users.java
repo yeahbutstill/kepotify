@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -20,8 +22,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Table(name = "users")
-//@SQLDelete(sql = "UPDATE users SET status_record='INACTIVE' WHERE id=?")
-//@Where(clause = "status_record='ACTIVE'")
+@SQLDelete(sql = "UPDATE users SET status_record='INACTIVE' WHERE id=?")
+@Where(clause = "status_record='ACTIVE'")
 public class Users extends BaseEntity {
 
     @NotEmpty
@@ -48,6 +50,15 @@ public class Users extends BaseEntity {
     )
     @ToString.Exclude
     private Set<Artist> followArtist;
+
+    @ManyToMany
+    @JoinTable(
+            name = "follows",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id")
+    )
+    @ToString.Exclude
+    private Set<Playlist> followPlaylist;
 
     @Override
     public boolean equals(Object o) {

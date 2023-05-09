@@ -1,23 +1,25 @@
 package com.yeahbutstill.kepotify.entity;
 
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
+import java.util.Objects;
 import java.util.Set;
 
-@Data
-//@Entity
+@Getter
+@Setter
+@ToString
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "playlists")
 public class Playlist extends BaseEntity {
 
     @NotBlank
@@ -31,20 +33,21 @@ public class Playlist extends BaseEntity {
     @NotEmpty
     private String image;
 
-    @ManyToMany(mappedBy = "followPlaylists")
+    @ManyToMany(mappedBy = "followPlaylist")
+    @ToString.Exclude
     private Set<Users> follow;
 
-    @ManyToMany(mappedBy = "containsPlaylists")
-    private Set<Song> contains;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Playlist playlist = (Playlist) o;
+        return getId() != null && Objects.equals(getId(), playlist.getId());
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "users_id")
-    @NotBlank
-    @NotEmpty
-    private Users users;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private PlaylistCategory playlistCategory;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
 }
