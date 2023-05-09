@@ -6,8 +6,10 @@ import com.yeahbutstill.kepotify.listener.UpdatedCreatedAtAware;
 import com.yeahbutstill.kepotify.listener.impl.UpdatedCreatedAtListener;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -15,7 +17,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -23,7 +24,6 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @EntityListeners({
         AuditingEntityListener.class,
         UpdatedCreatedAtListener.class
@@ -58,18 +58,5 @@ public class BaseEntity implements UpdatedCreatedAtAware {
     @Enumerated(EnumType.STRING)
     @Column(name = "status_record")
     private StatusRecord statusRecord = StatusRecord.ACTIVE;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        BaseEntity that = (BaseEntity) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 
 }

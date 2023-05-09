@@ -11,6 +11,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -68,6 +69,10 @@ public class Users extends BaseEntity {
     @ToString.Exclude
     private Set<Playlist> followPlaylist;
 
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    private List<Playlist> createPlaylist;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,4 +85,5 @@ public class Users extends BaseEntity {
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }
