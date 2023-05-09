@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.util.Objects;
 import java.util.Set;
@@ -17,8 +19,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Table(name = "artists")
-//@SQLDelete(sql = "UPDATE artist SET status_record='INACTIVE' WHERE id=?")
-//@Where(clause = "status_record='ACTIVE'")
+@SQLDelete(sql = "UPDATE artists SET status_record='INACTIVE' WHERE id=?")
+@Where(clause = "status_record='ACTIVE'")
 public class Artist extends BaseEntity {
 
     @NotEmpty

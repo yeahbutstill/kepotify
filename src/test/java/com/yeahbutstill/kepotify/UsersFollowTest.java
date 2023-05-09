@@ -1,9 +1,6 @@
 package com.yeahbutstill.kepotify;
 
-import com.yeahbutstill.kepotify.entity.Artist;
-import com.yeahbutstill.kepotify.entity.Playlist;
-import com.yeahbutstill.kepotify.entity.PlaylistCategory;
-import com.yeahbutstill.kepotify.entity.Users;
+import com.yeahbutstill.kepotify.entity.*;
 import com.yeahbutstill.kepotify.enums.EnvironmentType;
 import com.yeahbutstill.kepotify.utils.JpaUtil;
 import jakarta.persistence.EntityManager;
@@ -123,7 +120,7 @@ class UsersFollowTest {
         kakashi.setBirthday(LocalDate.of(1983, 5, 13));
         entityManager.persist(kakashi);
 
-        PlaylistCategory hardcore = new PlaylistCategory();
+        PlaylistCategorie hardcore = new PlaylistCategorie();
         hardcore.setName("Hardcore");
         String imageBytes = Arrays.toString(
                 Files.readAllBytes(
@@ -150,7 +147,7 @@ class UsersFollowTest {
         );
         playlist1.setImage(imageBytes1);
         playlist1.setUser(kakashi);
-        playlist1.setPlaylistCategory(hardcore);
+        playlist1.setPlaylistCategories(hardcore);
         entityManager.persist(playlist1);
 
         Playlist playlist2 = new Playlist();
@@ -166,7 +163,7 @@ class UsersFollowTest {
         );
         playlist2.setImage(imageBytes2);
         playlist2.setUser(kakashi);
-        playlist2.setPlaylistCategory(hardcore);
+        playlist2.setPlaylistCategories(hardcore);
         entityManager.persist(playlist2);
 
 
@@ -174,6 +171,39 @@ class UsersFollowTest {
         Assertions.assertNotNull(kakashi);
         Assertions.assertNotNull(playlist1);
         Assertions.assertNotNull(playlist2);
+
+        transaction.commit();
+        entityManager.close();
+
+    }
+
+    @Test
+    void testCreateContainsPlaylist() {
+
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        Playlist playlist = entityManager.find(Playlist.class, UUID.fromString("9fb96354-f1c0-4646-bf6a-3fc6754f17c4"));
+        Song song1 = entityManager.find(Song.class, UUID.fromString("cb4ca109-3eee-4d9b-884b-875a52d0cecd"));
+        Song song2 = entityManager.find(Song.class, UUID.fromString("d4b179f2-696f-4c03-a184-ed101b895647"));
+        Song song3 = entityManager.find(Song.class, UUID.fromString("a022c244-c493-43bd-9551-5070aacdb737"));
+        Song song4 = entityManager.find(Song.class, UUID.fromString("928f6f5a-b111-4879-ab7c-33b2fdd37344"));
+
+        playlist.setContainSong(new HashSet<>());
+        playlist.getContainSong().add(song1);
+        playlist.getContainSong().add(song2);
+        playlist.getContainSong().add(song3);
+        playlist.getContainSong().add(song4);
+
+        entityManager.merge(playlist);
+
+        Assertions.assertNotNull(playlist);
+        Assertions.assertNotNull(song1);
+        Assertions.assertNotNull(song2);
+        Assertions.assertNotNull(song3);
+        Assertions.assertNotNull(song4);
 
         transaction.commit();
         entityManager.close();

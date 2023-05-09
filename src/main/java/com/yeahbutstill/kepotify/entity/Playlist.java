@@ -45,7 +45,16 @@ public class Playlist extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "playlist_categories_id", referencedColumnName = "id")
-    private PlaylistCategory playlistCategory;
+    private PlaylistCategorie playlistCategories;
+
+    @ManyToMany
+    @JoinTable(
+            name = "contain_playlists",
+            joinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id")
+    )
+    @ToString.Exclude
+    private Set<Song> containSong;
 
     @Override
     public boolean equals(Object o) {

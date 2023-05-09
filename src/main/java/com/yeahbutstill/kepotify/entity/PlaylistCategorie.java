@@ -24,7 +24,7 @@ import java.util.Objects;
 @Table(name = "playlist_categories")
 @SQLDelete(sql = "UPDATE playlist_categories SET status_record='INACTIVE' WHERE id=?")
 @Where(clause = "status_record='ACTIVE'")
-public class PlaylistCategory extends BaseEntity {
+public class PlaylistCategorie extends BaseEntity {
 
     @NotBlank
     @NotEmpty
@@ -40,15 +40,15 @@ public class PlaylistCategory extends BaseEntity {
     @Lob
     private String image;
 
-    @OneToMany(mappedBy = "playlistCategory")
+    @OneToMany(mappedBy = "playlistCategories")
     @ToString.Exclude
-    private List<Playlist> containsPlaylists;
+    private List<Playlist> containPlaylists;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        PlaylistCategory that = (PlaylistCategory) o;
+        PlaylistCategorie that = (PlaylistCategorie) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

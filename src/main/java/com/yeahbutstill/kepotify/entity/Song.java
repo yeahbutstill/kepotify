@@ -3,6 +3,8 @@ package com.yeahbutstill.kepotify.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.util.Objects;
 import java.util.Set;
@@ -15,6 +17,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Table(name = "songs")
+@SQLDelete(sql = "UPDATE songs SET status_record='INACTIVE' WHERE id=?")
+@Where(clause = "status_record='ACTIVE'")
 public class Song extends BaseEntity {
 
     private String title;
@@ -31,6 +35,10 @@ public class Song extends BaseEntity {
     )
     @ToString.Exclude
     private Album album;
+
+    @ManyToMany(mappedBy = "containSong")
+    @ToString.Exclude
+    private Set<Playlist> songPlaylist;
 
     @Override
     public boolean equals(Object o) {
