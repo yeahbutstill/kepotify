@@ -4,6 +4,8 @@ import com.yeahbutstill.kepotify.helpers.YearAttributeConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.Year;
 import java.util.List;
@@ -18,6 +20,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Table(name = "albums")
+@SQLDelete(sql = "UPDATE albums SET status_record='INACTIVE' WHERE id=?")
+@Where(clause = "status_record='ACTIVE'")
 public class Album extends BaseEntity {
 
     private String title;

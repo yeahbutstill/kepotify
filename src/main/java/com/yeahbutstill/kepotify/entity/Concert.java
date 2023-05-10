@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -21,6 +23,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Table(name = "concerts")
+@SQLDelete(sql = "UPDATE concerts SET status_record='INACTIVE' WHERE id=?")
+@Where(clause = "status_record='ACTIVE'")
 public class Concert extends BaseEntity {
 
     @NotEmpty
@@ -53,4 +57,5 @@ public class Concert extends BaseEntity {
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }

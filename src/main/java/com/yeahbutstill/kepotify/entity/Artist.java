@@ -78,4 +78,5 @@ public class Artist extends BaseEntity {
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }

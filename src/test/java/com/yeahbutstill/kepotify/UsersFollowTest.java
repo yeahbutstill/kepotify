@@ -210,4 +210,25 @@ class UsersFollowTest {
 
     }
 
+    @Test
+    void testFindContainsPlaylist() {
+
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        Playlist playlist = entityManager.find(Playlist.class, UUID.fromString("9fb96354-f1c0-4646-bf6a-3fc6754f17c4"));
+
+        playlist.getContainSong().forEach(song -> {
+            System.out.println(song.getTitle());
+        });
+
+        Assertions.assertNotNull(playlist);
+
+        transaction.commit();
+        entityManager.close();
+
+    }
+
 }
