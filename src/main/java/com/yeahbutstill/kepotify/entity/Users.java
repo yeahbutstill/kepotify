@@ -53,7 +53,7 @@ public class Users extends BaseEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "follows",
+            name = "follow_artists",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id")
     )
@@ -62,7 +62,7 @@ public class Users extends BaseEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "follows",
+            name = "follow_playlists",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id")
     )
