@@ -40,6 +40,10 @@ public class Song extends BaseEntity {
     @ToString.Exclude
     private Set<Playlist> songPlaylist;
 
+    @ManyToMany(mappedBy = "likes")
+    @ToString.Exclude
+    private Set<Users> likedBy;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

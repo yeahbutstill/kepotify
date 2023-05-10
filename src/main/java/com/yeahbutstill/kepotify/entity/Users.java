@@ -73,6 +73,15 @@ public class Users extends BaseEntity {
     @ToString.Exclude
     private List<Playlist> createPlaylist;
 
+    @ManyToMany
+    @JoinTable(
+            name = "users_like_songs",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id")
+    )
+    @ToString.Exclude
+    private Set<Song> likes;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
