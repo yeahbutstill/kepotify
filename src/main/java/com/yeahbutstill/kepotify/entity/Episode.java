@@ -1,22 +1,25 @@
 package com.yeahbutstill.kepotify.entity;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
-import java.time.LocalDate;
+import java.util.Objects;
 
-@Data
-//@Entity
+@Getter
+@Setter
+@ToString
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "episodes")
+@SQLDelete(sql = "UPDATE episodes SET status_record='INACTIVE' WHERE id=?")
+@Where(clause = "status_record='ACTIVE'")
 public class Episode extends BaseEntity {
 
     @NotBlank
@@ -26,13 +29,23 @@ public class Episode extends BaseEntity {
     @Lob
     private String description;
 
-    private LocalDate publishedAt;
     private Integer duration;
 
     @ManyToOne
-    @JoinColumn(name = "podcast_id")
-    @NotBlank
-    @NotEmpty
+    @JoinColumn(name = "podcast_id", referencedColumnName = "id")
     private Podcast podcast;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Episode episode = (Episode) o;
+        return getId() != null && Objects.equals(getId(), episode.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
 }

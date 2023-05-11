@@ -1,6 +1,9 @@
 package com.yeahbutstill.kepotify.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
@@ -18,43 +21,40 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "podcasts")
-@SQLDelete(sql = "UPDATE podcasts SET status_record='INACTIVE' WHERE id=?")
+@Table(name = "podcast_categories")
+@SQLDelete(sql = "UPDATE podcast_categories SET status_record='INACTIVE' WHERE id=?")
 @Where(clause = "status_record='ACTIVE'")
-public class Podcast extends BaseEntity {
+public class PodcastCategories extends BaseEntity {
 
     @NotBlank
     @NotEmpty
     private String name;
 
+    @NotEmpty
+    @NotBlank
     @Lob
-    private String about;
+    private String icon;
 
+    @NotEmpty
+    @NotBlank
     @Lob
     private String image;
 
-    @OneToMany(mappedBy = "podcast")
+    @OneToMany(mappedBy = "podcastCategories")
     @ToString.Exclude
-    private List<Episode> episodes;
-
-    @ManyToOne
-    @JoinColumn(name = "podcast_categories_id", referencedColumnName = "id")
-    private PodcastCategories podcastCategories;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private Users userPodcasts;
+    private List<Podcast> containsPodcasts;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Podcast podcast = (Podcast) o;
-        return getId() != null && Objects.equals(getId(), podcast.getId());
+        PodcastCategories that = (PodcastCategories) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }

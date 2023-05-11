@@ -41,7 +41,7 @@ public class Playlist extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private Users user;
+    private Users userPlaylists;
 
     @ManyToOne
     @JoinColumn(name = "playlist_categories_id", referencedColumnName = "id")

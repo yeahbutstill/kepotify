@@ -46,6 +46,14 @@ public class Users extends BaseEntity {
     @Transient
     private String userDetails;
 
+    @OneToMany(mappedBy = "userPlaylists")
+    @ToString.Exclude
+    private List<Playlist> createPlaylist;
+
+    @OneToMany(mappedBy = "userPodcasts")
+    @ToString.Exclude
+    private List<Podcast> createPodcast;
+
     @PostLoad
     public void postLoadUserDetails() {
         this.userDetails = this.name + ", " + this.email + ", " + this.birthday;
@@ -68,10 +76,6 @@ public class Users extends BaseEntity {
     )
     @ToString.Exclude
     private Set<Playlist> followPlaylist;
-
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    private List<Playlist> createPlaylist;
 
     @ManyToMany
     @JoinTable(

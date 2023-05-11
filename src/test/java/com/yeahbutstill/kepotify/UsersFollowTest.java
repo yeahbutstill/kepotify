@@ -162,7 +162,7 @@ class UsersFollowTest {
                 )
         );
         playlist1.setImage(imageBytes1);
-        playlist1.setUser(turu);
+        playlist1.setUserPlaylists(turu);
         playlist1.setPlaylistCategories(hardcore);
         entityManager.persist(playlist1);
 
