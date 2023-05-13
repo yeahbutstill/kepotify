@@ -115,4 +115,23 @@ class PodcastCategoriesTest {
 
     }
 
+    @Test
+    void testLazyFindEpisodes() {
+
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        Podcast podcast = entityManager.find(Podcast.class, UUID.fromString("751c741a-aca4-4993-a9c6-331c20319041"));
+        Episode episode = entityManager.find(Episode.class, UUID.fromString("7f9d21be-ab86-48e2-a61c-32d2ec16926a"));
+        Assertions.assertNotNull(podcast);
+        Assertions.assertNotNull(podcast.getEpisodes());
+        Assertions.assertNotNull(episode);
+
+        transaction.commit();
+        entityManager.close();
+
+    }
+
 }

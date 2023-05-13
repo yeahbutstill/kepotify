@@ -31,8 +31,9 @@ public class Episode extends BaseEntity {
 
     private Integer duration;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "podcast_id", referencedColumnName = "id")
+    @ToString.Exclude
     private Podcast podcast;
 
     @Override
