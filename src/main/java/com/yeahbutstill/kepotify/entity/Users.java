@@ -23,6 +23,9 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Table(name = "users")
+@DiscriminatorColumn(name = "type")
+@DiscriminatorValue("BASIC")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @SQLDelete(sql = "UPDATE users SET status_record='INACTIVE' WHERE id=?")
 @Where(clause = "status_record='ACTIVE'")
 public class Users extends BaseEntity {
