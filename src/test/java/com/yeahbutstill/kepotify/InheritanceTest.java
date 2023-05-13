@@ -1,8 +1,6 @@
 package com.yeahbutstill.kepotify;
 
-import com.yeahbutstill.kepotify.entity.Premium;
-import com.yeahbutstill.kepotify.entity.Users;
-import com.yeahbutstill.kepotify.entity.Vip;
+import com.yeahbutstill.kepotify.entity.*;
 import com.yeahbutstill.kepotify.utils.JpaUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -72,6 +70,58 @@ class InheritanceTest {
         Vip vip = (Vip) users;
         Assertions.assertEquals("Loh", vip.getName());
 
+
+        transaction.commit();
+        entityManager.close();
+
+    }
+
+    @Test
+    void testInsertPaymentTypeJoinTable() {
+
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        PaymentGopay gopay = new PaymentGopay();
+        gopay.setGopayId("0877777777777");
+        gopay.setAmount(new BigDecimal(100_000));
+        entityManager.persist(gopay);
+        Assertions.assertNotNull(gopay);
+
+        PaymentCreditCard creditCard = new PaymentCreditCard();
+        creditCard.setMaskedCard("4555-5555-5555-5555");
+        creditCard.setAmount(new BigDecimal(500_000));
+        creditCard.setBank("BCA");
+        entityManager.persist(creditCard);
+        Assertions.assertNotNull(creditCard);
+
+        Payment payment = entityManager.find(Payment.class, UUID.fromString(String.valueOf(gopay.getId())));
+        PaymentGopay paymentGopay = (PaymentGopay) payment;
+        Assertions.assertEquals(gopay.getGopayId(), paymentGopay.getGopayId());
+
+        transaction.commit();
+        entityManager.close();
+
+    }
+
+    @Test
+    void testFindPaymentTypeJoinTable() {
+
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        Payment payment = entityManager.find(Payment.class, UUID.fromString("3d039b9f-5a78-4331-8661-19e830cc95a5"));
+        PaymentGopay paymentGopay = (PaymentGopay) payment;
+        PaymentGopay findPaymentGopay = entityManager.find(PaymentGopay.class, UUID.fromString("3d039b9f-5a78-4331-8661-19e830cc95a5"));
+        PaymentCreditCard findPaymentCreditCard = entityManager.find(PaymentCreditCard.class, UUID.fromString("121636c0-7682-4e09-833d-856368700055"));
+
+        Assertions.assertEquals(paymentGopay.getId(), payment.getId());
+        Assertions.assertEquals(paymentGopay.getGopayId(), findPaymentGopay.getGopayId());
+        Assertions.assertEquals("BCA", findPaymentCreditCard.getBank());
 
         transaction.commit();
         entityManager.close();

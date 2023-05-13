@@ -13,6 +13,10 @@ CREATE TABLE users (
     environment CHARACTER VARYING(150) NOT NULL,
     status_record CHARACTER VARYING(150) NOT NULL
 );
+ALTER TABLE users
+    ADD type CHARACTER VARYING(50);
+ALTER TABLE users
+    ADD member_expired_date TIMESTAMP;
 
 CREATE TABLE follow_artists (
     user_id UUID DEFAULT uuid_generate_v4() NOT NULL,
@@ -162,4 +166,73 @@ CREATE TABLE users_like_songs (
     CONSTRAINT fk_users_users_like_songs FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT fk_songs_users_like_songs FOREIGN KEY (song_id) REFERENCES songs (id),
     PRIMARY KEY (user_id, song_id)
+);
+
+CREATE TABLE podcasts (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
+    user_id UUID NOT NULL,
+    podcast_categories_id UUID NULL,
+    name CHARACTER VARYING(150) NOT NULL,
+    about TEXT,
+    image CHARACTER VARYING(150),
+    created_by CHARACTER VARYING(150),
+    updated_by CHARACTER VARYING(150),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    environment CHARACTER VARYING(150) NOT NULL,
+    status_record CHARACTER VARYING(150) NOT NULL,
+    CONSTRAINT fk_user_podcasts FOREIGN KEY (user_id) REFERENCES users (id),
+    CONSTRAINT fk_category_podcasts FOREIGN KEY (podcast_categories_id) REFERENCES podcast_categories (id)
+);
+
+CREATE TABLE podcast_categories (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
+    name CHARACTER VARYING(150) NOT NULL,
+    image CHARACTER VARYING(150) NOT NULL,
+    icon CHARACTER VARYING(150) NOT NULL,
+    created_by CHARACTER VARYING(150),
+    updated_by CHARACTER VARYING(150),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    environment CHARACTER VARYING(150) NOT NULL,
+    status_record CHARACTER VARYING(150) NOT NULL
+);
+
+CREATE TABLE episodes (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
+    podcast_id UUID NOT NULL,
+    title CHARACTER VARYING(150) NOT NULL,
+    description TEXT,
+    duration INT,
+    created_by CHARACTER VARYING(150),
+    updated_by CHARACTER VARYING(150),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    environment CHARACTER VARYING(150) NOT NULL,
+    status_record CHARACTER VARYING(150) NOT NULL,
+    CONSTRAINT fk_podcast_episodes FOREIGN KEY (podcast_id) REFERENCES podcasts (id)
+);
+
+CREATE TABLE payments (
+    id CHARACTER VARYING(100) PRIMARY KEY NOT NULL,
+    amount NUMERIC NOT NULL,
+    created_by CHARACTER VARYING(150),
+    updated_by CHARACTER VARYING(150),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    environment CHARACTER VARYING(150),
+    status_record CHARACTER VARYING(150)
+);
+
+CREATE TABLE payments_gopay (
+    id CHARACTER VARYING(100) PRIMARY KEY NOT NULL,
+    gopay_id CHARACTER VARYING(100) NOT NULL,
+    CONSTRAINT fk_payments_gopay FOREIGN KEY (id) REFERENCES payments (id)
+);
+
+CREATE TABLE payments_credit_card (
+    id CHARACTER VARYING(100) PRIMARY KEY NOT NULL,
+    masked_card CHARACTER VARYING(100) NOT NULL,
+    bank CHARACTER VARYING(100) NOT NULL,
+    CONSTRAINT fk_payments_credit_card FOREIGN KEY (id) REFERENCES payments (id)
 );
