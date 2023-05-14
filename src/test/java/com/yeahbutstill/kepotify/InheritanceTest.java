@@ -128,4 +128,51 @@ class InheritanceTest {
 
     }
 
+
+    @Test
+    void testInsertTransactionsTypeSingleTable() {
+
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        Transaction transaction1 = new Transaction();
+        transaction1.setBalance(new BigDecimal(100_000_000));
+        entityManager.persist(transaction1);
+        Assertions.assertNotNull(transaction1);
+
+        TransactionDebit transactionDebit = new TransactionDebit();
+        transactionDebit.setBalance(new BigDecimal(200_000_000));
+        transactionDebit.setDebitAmount(new BigDecimal(100_000_000));
+        entityManager.persist(transactionDebit);
+        Assertions.assertNotNull(transactionDebit);
+
+        TransactionCredit transactionCredit = new TransactionCredit();
+        transactionCredit.setBalance(new BigDecimal(100_000_000));
+        transactionCredit.setCreditAmount(new BigDecimal(100_000_000));
+        entityManager.persist(transactionCredit);
+        Assertions.assertNotNull(transactionCredit);
+
+        transaction.commit();
+        entityManager.close();
+
+    }
+
+    @Test
+    void testFindChildTransactionsTypeSingleTable() {
+
+        EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        TransactionDebit transactionDebit = entityManager.find(TransactionDebit.class, UUID.fromString("72b85fa4-eb83-4564-9e39-d0a8626019e0"));
+        TransactionCredit transactionCredit = entityManager.find(TransactionCredit.class, UUID.fromString("75b0997a-a2c3-49e0-bc11-7e3ca007bb07"));
+
+        transaction.commit();
+        entityManager.close();
+
+    }
+
 }

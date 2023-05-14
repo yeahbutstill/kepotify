@@ -23,8 +23,6 @@ u
 Esrc/main/java/com/yeahbutstill/kepotify/entity/PlaylistCategorie.java,1/5/15a006af48ffd1cc08eedc2a3a45c242bba99b2f
 u
 Esrc/main/java/com/yeahbutstill/kepotify/entity/PodcastCategories.java,7/a/7a6a92912e8c9f48217b28c52cc601e17b6b4fd8
-h
-8src/main/java/com/yeahbutstill/kepotify/entity/Song.java,3/7/37c364a2ca50565c6b93c4dfb45c9607505949d8
 l
 <src/main/java/com/yeahbutstill/kepotify/entity/Response.java,4/1/416f1286a0ad91ab7c8a67434df1a767921ad1c7
 k
