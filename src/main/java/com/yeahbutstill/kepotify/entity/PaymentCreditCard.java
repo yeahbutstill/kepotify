@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import java.util.Objects;
 
@@ -17,8 +15,6 @@ import java.util.Objects;
 @ToString
 @Entity
 @Table(name = "payments_credit_card")
-@SQLDelete(sql = "UPDATE payments_credit_card SET status_record='INACTIVE' WHERE id=?")
-@Where(clause = "status_record='ACTIVE'")
 public class PaymentCreditCard extends Payment {
 
     @Column(name = "masked_card")

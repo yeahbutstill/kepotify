@@ -169,6 +169,8 @@ class InheritanceTest {
 
         TransactionDebit transactionDebit = entityManager.find(TransactionDebit.class, UUID.fromString("72b85fa4-eb83-4564-9e39-d0a8626019e0"));
         TransactionCredit transactionCredit = entityManager.find(TransactionCredit.class, UUID.fromString("75b0997a-a2c3-49e0-bc11-7e3ca007bb07"));
+        Assertions.assertNotNull(transactionDebit);
+        Assertions.assertNotNull(transactionCredit);
 
         transaction.commit();
         entityManager.close();

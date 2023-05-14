@@ -16,9 +16,10 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
+// Ini hanya sebuah parent class tapi bukan IS-A Relationship
 @MappedSuperclass
 @Getter
 @Setter
@@ -28,12 +29,13 @@ import java.util.UUID;
         AuditingEntityListener.class,
         UpdatedCreatedAtListener.class
 })
-public class BaseEntity implements UpdatedCreatedAtAware {
+// ini dimana T itu harus extends Serializable
+public abstract class AuditTableEntity<T extends Serializable> implements UpdatedCreatedAtAware {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private UUID id;
+    private T id;
 
     @CreatedBy
     @Column(name = "created_by")

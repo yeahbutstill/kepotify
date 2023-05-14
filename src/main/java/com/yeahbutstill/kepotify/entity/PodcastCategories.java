@@ -13,6 +13,7 @@ import org.hibernate.annotations.Where;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -24,7 +25,7 @@ import java.util.Objects;
 @Table(name = "podcast_categories")
 @SQLDelete(sql = "UPDATE podcast_categories SET status_record='INACTIVE' WHERE id=?")
 @Where(clause = "status_record='ACTIVE'")
-public class PodcastCategories extends BaseEntity {
+public class PodcastCategories extends AuditTableEntity<UUID> {
 
     @NotBlank
     @NotEmpty

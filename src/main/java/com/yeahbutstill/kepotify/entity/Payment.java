@@ -8,6 +8,7 @@ import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +20,7 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.JOINED)
 @SQLDelete(sql = "UPDATE payments SET status_record='INACTIVE' WHERE id=?")
 @Where(clause = "status_record='ACTIVE'")
-public class Payment extends BaseEntity {
+public class Payment extends AuditTableEntity<UUID> {
 
     @Column(name = "amount")
     private BigDecimal amount;

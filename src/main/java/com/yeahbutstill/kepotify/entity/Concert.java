@@ -14,6 +14,7 @@ import org.hibernate.annotations.Where;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -25,7 +26,7 @@ import java.util.Set;
 @Table(name = "concerts")
 @SQLDelete(sql = "UPDATE concerts SET status_record='INACTIVE' WHERE id=?")
 @Where(clause = "status_record='ACTIVE'")
-public class Concert extends BaseEntity {
+public class Concert extends AuditTableEntity<UUID> {
 
     @NotEmpty
     @NotBlank

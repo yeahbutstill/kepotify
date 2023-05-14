@@ -11,6 +11,7 @@ import java.time.Year;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ import java.util.Set;
 @Table(name = "albums")
 @SQLDelete(sql = "UPDATE albums SET status_record='INACTIVE' WHERE id=?")
 @Where(clause = "status_record='ACTIVE'")
-public class Album extends BaseEntity {
+public class Album extends AuditTableEntity<UUID> {
 
     private String title;
 
