@@ -214,25 +214,60 @@ CREATE TABLE episodes (
 );
 
 CREATE TABLE payments (
-    id CHARACTER VARYING(100) PRIMARY KEY NOT NULL,
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
     amount NUMERIC NOT NULL,
     created_by CHARACTER VARYING(150),
     updated_by CHARACTER VARYING(150),
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
-    environment CHARACTER VARYING(150),
-    status_record CHARACTER VARYING(150)
+    environment CHARACTER VARYING(150) NOT NULL,
+    status_record CHARACTER VARYING(150) NOT NULL
 );
 
 CREATE TABLE payments_gopay (
-    id CHARACTER VARYING(100) PRIMARY KEY NOT NULL,
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
     gopay_id CHARACTER VARYING(100) NOT NULL,
     CONSTRAINT fk_payments_gopay FOREIGN KEY (id) REFERENCES payments (id)
 );
 
 CREATE TABLE payments_credit_card (
-    id CHARACTER VARYING(100) PRIMARY KEY NOT NULL,
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
     masked_card CHARACTER VARYING(100) NOT NULL,
     bank CHARACTER VARYING(100) NOT NULL,
     CONSTRAINT fk_payments_credit_card FOREIGN KEY (id) REFERENCES payments (id)
+);
+
+CREATE TABLE transactions (
+    id UUID DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    balance BIGINT NOT NULL,
+    created_by CHARACTER VARYING(150),
+    updated_by CHARACTER VARYING(150),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    environment CHARACTER VARYING(150) NOT NULL,
+    status_record CHARACTER VARYING(150) NOT NULL
+);
+
+CREATE TABLE transactions_debit (
+    id UUID DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    balance BIGINT NOT NULL,
+    debit_amount BIGINT NOT NULL,
+    created_by CHARACTER VARYING(150),
+    updated_by CHARACTER VARYING(150),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    environment CHARACTER VARYING(150) NOT NULL,
+    status_record CHARACTER VARYING(150) NOT NULL
+);
+
+CREATE TABLE transactions_credit (
+    id UUID DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    balance BIGINT NOT NULL,
+    credit_amount BIGINT NOT NULL,
+    created_by CHARACTER VARYING(150),
+    updated_by CHARACTER VARYING(150),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    environment CHARACTER VARYING(150) NOT NULL,
+    status_record CHARACTER VARYING(150) NOT NULL
 );

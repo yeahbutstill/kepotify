@@ -62,4 +62,7 @@ public abstract class AuditTableEntity<T extends Serializable> implements Update
     @Column(name = "status_record")
     private StatusRecord statusRecord = StatusRecord.ACTIVE;
 
+    @Version
+    private Long version;
+
 }
