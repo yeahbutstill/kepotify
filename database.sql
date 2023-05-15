@@ -17,6 +17,8 @@ ALTER TABLE users
     ADD type CHARACTER VARYING(50);
 ALTER TABLE users
     ADD member_expired_date TIMESTAMP;
+ALTER TABLE users
+    ADD COLUMN version BIGINT;
 
 CREATE TABLE follow_artists (
     user_id UUID DEFAULT uuid_generate_v4() NOT NULL,
@@ -49,6 +51,7 @@ CREATE TABLE artists (
     environment CHARACTER VARYING(150) NOT NULL,
     status_record CHARACTER VARYING(150) NOT NULL
 );
+ALTER TABLE artists ADD COLUMN version BIGINT;
 
 CREATE TABLE sings (
     artist_id UUID DEFAULT uuid_generate_v4() NOT NULL,
@@ -78,6 +81,7 @@ CREATE TABLE albums (
     environment CHARACTER VARYING(150) NOT NULL,
     status_record CHARACTER VARYING(150) NOT NULL
 );
+ALTER TABLE albums ADD COLUMN version BIGINT;
 
 CREATE TABLE songs (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
@@ -92,6 +96,7 @@ CREATE TABLE songs (
     status_record CHARACTER VARYING(150) NOT NULL,
     CONSTRAINT fk_albums_songs FOREIGN KEY (album_id) REFERENCES albums(id)
 );
+ALTER TABLE songs ADD COLUMN version BIGINT;
 
 CREATE TABLE concerts (
     id UUID DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
@@ -107,12 +112,7 @@ CREATE TABLE concerts (
     environment CHARACTER VARYING(150) NOT NULL,
     status_record CHARACTER VARYING(150) NOT NULL
 );
-ALTER TABLE concerts ADD COLUMN created_by CHARACTER VARYING(150);
-ALTER TABLE concerts ADD COLUMN updated_by CHARACTER VARYING(150);
-ALTER TABLE concerts ADD COLUMN created_at TIMESTAMP;
-ALTER TABLE concerts ADD COLUMN updated_at TIMESTAMP;
-ALTER TABLE concerts ADD COLUMN environment CHARACTER VARYING(150);
-ALTER TABLE concerts ADD COLUMN status_record CHARACTER VARYING(150);
+ALTER TABLE concerts ADD COLUMN version BIGINT;
 
 CREATE TABLE performs (
     artist_id UUID DEFAULT uuid_generate_v4() NOT NULL,
@@ -134,6 +134,7 @@ CREATE TABLE playlist_categories (
     environment CHARACTER VARYING(150) NOT NULL,
     status_record CHARACTER VARYING(150) NOT NULL
 );
+ALTER TABLE playlist_categories ADD COLUMN version BIGINT;
 
 CREATE TABLE playlists (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
@@ -151,6 +152,7 @@ CREATE TABLE playlists (
     CONSTRAINT fk_user_playlist FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT fk_category_playlist FOREIGN KEY (playlist_categories_id) REFERENCES playlist_categories (id)
 );
+ALTER TABLE playlists ADD COLUMN version BIGINT;
 
 CREATE TABLE contain_playlists (
     song_id UUID DEFAULT uuid_generate_v4() NOT NULL,
@@ -184,6 +186,7 @@ CREATE TABLE podcasts (
     CONSTRAINT fk_user_podcasts FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT fk_category_podcasts FOREIGN KEY (podcast_categories_id) REFERENCES podcast_categories (id)
 );
+ALTER TABLE podcasts ADD COLUMN version BIGINT;
 
 CREATE TABLE podcast_categories (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
@@ -197,6 +200,7 @@ CREATE TABLE podcast_categories (
     environment CHARACTER VARYING(150) NOT NULL,
     status_record CHARACTER VARYING(150) NOT NULL
 );
+ALTER TABLE podcast_categories ADD COLUMN version BIGINT;
 
 CREATE TABLE episodes (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
@@ -212,6 +216,7 @@ CREATE TABLE episodes (
     status_record CHARACTER VARYING(150) NOT NULL,
     CONSTRAINT fk_podcast_episodes FOREIGN KEY (podcast_id) REFERENCES podcasts (id)
 );
+ALTER TABLE episodes ADD COLUMN version BIGINT;
 
 CREATE TABLE payments (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
@@ -223,6 +228,7 @@ CREATE TABLE payments (
     environment CHARACTER VARYING(150) NOT NULL,
     status_record CHARACTER VARYING(150) NOT NULL
 );
+ALTER TABLE payments ADD COLUMN version BIGINT;
 
 CREATE TABLE payments_gopay (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY NOT NULL,
@@ -247,6 +253,7 @@ CREATE TABLE transactions (
     environment CHARACTER VARYING(150) NOT NULL,
     status_record CHARACTER VARYING(150) NOT NULL
 );
+ALTER TABLE transactions ADD COLUMN version BIGINT;
 
 CREATE TABLE transactions_debit (
     id UUID DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
@@ -259,6 +266,7 @@ CREATE TABLE transactions_debit (
     environment CHARACTER VARYING(150) NOT NULL,
     status_record CHARACTER VARYING(150) NOT NULL
 );
+ALTER TABLE transactions_debit ADD COLUMN version BIGINT;
 
 CREATE TABLE transactions_credit (
     id UUID DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
@@ -271,3 +279,4 @@ CREATE TABLE transactions_credit (
     environment CHARACTER VARYING(150) NOT NULL,
     status_record CHARACTER VARYING(150) NOT NULL
 );
+ALTER TABLE transactions_credit ADD COLUMN version BIGINT;

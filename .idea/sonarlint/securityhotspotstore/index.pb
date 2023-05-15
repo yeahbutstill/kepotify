@@ -51,8 +51,6 @@ i
 9src/main/java/com/yeahbutstill/kepotify/entity/Album.java,c/e/ced7827b03438dd1507ff1b4341b55441759fe91
 l
 <src/test/java/com/yeahbutstill/kepotify/InheritanceTest.java,7/9/79ca602617c4644b46121180fdc367a287bee407
-<
-database.sql,d/d/dd715606dbf1c1508d07bd20c1262a49c65d1863
 k
 ;src/main/java/com/yeahbutstill/kepotify/entity/Payment.java,4/c/4c5ff481816d67f0f91cb8f289a01d6910d9447b
 u

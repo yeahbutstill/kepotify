@@ -53,8 +53,6 @@ k
 ;src/main/java/com/yeahbutstill/kepotify/entity/Payment.java,4/c/4c5ff481816d67f0f91cb8f289a01d6910d9447b
 l
 <src/test/java/com/yeahbutstill/kepotify/InheritanceTest.java,7/9/79ca602617c4644b46121180fdc367a287bee407
-<
-database.sql,d/d/dd715606dbf1c1508d07bd20c1262a49c65d1863
 t
 Dsrc/main/java/com/yeahbutstill/kepotify/entity/TransactionDebit.java,3/b/3b01b50bb6a3ebcfc5d9b0d3d721851a025f4fc6
 u
