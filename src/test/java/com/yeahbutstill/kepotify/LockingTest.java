@@ -24,9 +24,10 @@ class LockingTest {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
+        // unmanaged entity
         Transaction transaction = new Transaction();
         transaction.setBalance(new BigDecimal(50_000_000));
-        entityManager.persist(transaction);
+        entityManager.persist(transaction); // managed entity
 
         TransactionCredit transactionCredit = new TransactionCredit();
         transactionCredit.setBalance(transaction.getBalance());
