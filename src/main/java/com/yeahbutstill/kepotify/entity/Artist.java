@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.Objects;
 import java.util.Set;
@@ -21,7 +21,7 @@ import java.util.UUID;
 @Builder
 @Table(name = "artists")
 @SQLDelete(sql = "UPDATE artists SET status_record='INACTIVE' WHERE id=?")
-@Where(clause = "status_record='ACTIVE'")
+@SQLRestriction(value = "status_record='ACTIVE'")
 public class Artist extends AuditTableEntity<UUID> {
 
     @NotEmpty
@@ -34,6 +34,7 @@ public class Artist extends AuditTableEntity<UUID> {
     private String wikipedia;
 
     @Lob
+    @Column(columnDefinition = "text")
     private String bio;
 
     @ManyToMany

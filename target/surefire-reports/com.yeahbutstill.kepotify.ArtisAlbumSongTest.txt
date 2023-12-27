@@ -1,0 +1,46 @@
+-------------------------------------------------------------------------------
+Test set: com.yeahbutstill.kepotify.ArtisAlbumSongTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 0, Errors: 6, Skipped: 0, Time elapsed: 5.787 s <<< FAILURE! -- in com.yeahbutstill.kepotify.ArtisAlbumSongTest
+com.yeahbutstill.kepotify.ArtisAlbumSongTest.testFetchArtisHasAlbums -- Time elapsed: 4.980 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.Song.getAlbum()" because "song" is null
+	at com.yeahbutstill.kepotify.ArtisAlbumSongTest.testFetchArtisHasAlbums(ArtisAlbumSongTest.java:256)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.yeahbutstill.kepotify.ArtisAlbumSongTest.testUpdateArtisHasAlbums -- Time elapsed: 0.080 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.Artist.getHasAlbums()" because "artist" is null
+	at com.yeahbutstill.kepotify.ArtisAlbumSongTest.testUpdateArtisHasAlbums(ArtisAlbumSongTest.java:196)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.yeahbutstill.kepotify.ArtisAlbumSongTest.testArtisHasAlbums -- Time elapsed: 0.009 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.Artist.setHasAlbums(java.util.Set)" because "artist" is null
+	at com.yeahbutstill.kepotify.ArtisAlbumSongTest.testArtisHasAlbums(ArtisAlbumSongTest.java:165)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.yeahbutstill.kepotify.ArtisAlbumSongTest.testFindAlbumAndSong -- Time elapsed: 0.121 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.Album.getTitle()" because "album" is null
+	at com.yeahbutstill.kepotify.ArtisAlbumSongTest.testFindAlbumAndSong(ArtisAlbumSongTest.java:144)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.yeahbutstill.kepotify.ArtisAlbumSongTest.testSingSong -- Time elapsed: 0.089 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.Artist.setSingSong(java.util.Set)" because "artist" is null
+	at com.yeahbutstill.kepotify.ArtisAlbumSongTest.testSingSong(ArtisAlbumSongTest.java:219)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.yeahbutstill.kepotify.ArtisAlbumSongTest.testInsertArtistPerforms -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.Artist.setPerforms(java.util.Set)" because "artist" is null
+	at com.yeahbutstill.kepotify.ArtisAlbumSongTest.testInsertArtistPerforms(ArtisAlbumSongTest.java:308)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

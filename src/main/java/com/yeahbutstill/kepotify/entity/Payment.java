@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @Table(name = "payments")
 @Inheritance(strategy = InheritanceType.JOINED)
 @SQLDelete(sql = "UPDATE payments SET status_record='INACTIVE' WHERE id=?")
-@Where(clause = "status_record='ACTIVE'")
+@SQLRestriction(value = "status_record='ACTIVE'")
 public class Payment extends AuditTableEntity<UUID> {
 
     @Column(name = "amount")

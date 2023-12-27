@@ -11,12 +11,10 @@ import jakarta.persistence.EntityTransaction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.File;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.Year;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.UUID;
@@ -48,7 +46,7 @@ class ArtisAlbumSongTest {
     }
 
     @Test
-    void testInsertAlbumAndSong() throws IOException {
+    void testInsertAlbumAndSong() {
 
         EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -57,15 +55,18 @@ class ArtisAlbumSongTest {
 
         Album album = new Album();
         album.setTitle("From Dust and Ashes");
-        String imageBytes = Arrays.toString(
-                Files.readAllBytes(
-                        Path.of(
-                                Objects.requireNonNull(getClass().getResource("/images/a4186047900_10.jpg"))
-                                        .getPath()
-                        )
-                )
-        );
-        album.setImage(imageBytes);
+        Path path = new File(Objects.requireNonNull(getClass()
+                        .getResource("/images/a4186047900_10.jpg"))
+                .getFile()).toPath();
+//        String imageBytes = Arrays.toString(
+//                Files.readAllBytes(
+//                        Path.of(
+//                                Objects.requireNonNull(getClass().getResource("/images/a4186047900_10.jpg"))
+//                                        .getPath()
+//                        )
+//                )
+//        );
+        album.setImage(String.valueOf(path));
         album.setRelease(Year.of(2015));
         entityManager.persist(album);
         Assertions.assertNotNull(album);
@@ -133,7 +134,7 @@ class ArtisAlbumSongTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Album album = entityManager.find(Album.class, UUID.fromString("9fb8bdd8-b0e3-4d9d-bb2d-bf6a74de02f3"));
+        Album album = entityManager.find(Album.class, UUID.fromString("bd9c051f-df01-46f3-957c-c5bbe1b86ed5"));
         Assertions.assertEquals("From Dust and Ashes", album.getTitle());
         Assertions.assertEquals(8, album.getSongs().size());
 
@@ -154,19 +155,16 @@ class ArtisAlbumSongTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Artist artist = entityManager.find(Artist.class, UUID.fromString("d92f445d-15f4-465a-bbd0-fbee14b3aa86"));
+        Artist artist = entityManager.find(Artist.class, UUID.fromString("9798d12c-386d-47d4-b3e1-1d78be2e9be0"));
         artist.setHasAlbums(new HashSet<>());
 
-        Album album1 = entityManager.find(Album.class, UUID.fromString("9fb8bdd8-b0e3-4d9d-bb2d-bf6a74de02f3"));
-        Album album2 = entityManager.find(Album.class, UUID.fromString("dc1ce796-be52-4125-924b-098e402ec821"));
+        Album album1 = entityManager.find(Album.class, UUID.fromString("bd9c051f-df01-46f3-957c-c5bbe1b86ed5"));
 
         artist.getHasAlbums().add(album1);
-        artist.getHasAlbums().add(album2);
 
         Assertions.assertNotNull(artist.getHasAlbums());
-        Assertions.assertEquals(2, artist.getHasAlbums().size());
+        Assertions.assertEquals(1, artist.getHasAlbums().size());
         Assertions.assertEquals(8, album1.getSongs().size());
-        Assertions.assertEquals(2, album2.getSongs().size());
 
         entityManager.merge(artist);
 
@@ -183,7 +181,7 @@ class ArtisAlbumSongTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Artist artist = entityManager.find(Artist.class, UUID.fromString("de3c9ca1-5f31-44f1-bb61-cd22f94eba39"));
+        Artist artist = entityManager.find(Artist.class, UUID.fromString("9798d12c-386d-47d4-b3e1-1d78be2e9be0"));
         Album album = null;
 
         for (Album item : artist.getHasAlbums()) {
@@ -208,25 +206,10 @@ class ArtisAlbumSongTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Artist artist = entityManager.find(Artist.class, UUID.fromString("d92f445d-15f4-465a-bbd0-fbee14b3aa86"));
+        Artist artist = entityManager.find(Artist.class, UUID.fromString("9798d12c-386d-47d4-b3e1-1d78be2e9be0"));
         artist.setSingSong(new HashSet<>());
+        Song song8 = entityManager.find(Song.class, UUID.fromString("66f28cd7-914a-4db3-be60-07f08c1f01ff"));
 
-        Song song1 = entityManager.find(Song.class, UUID.fromString("a9c58ef4-3dbe-4d88-aa00-886220c7ad84"));
-        Song song2 = entityManager.find(Song.class, UUID.fromString("efb1b7c3-31fe-4e1f-a346-afb839ede459"));
-        Song song3 = entityManager.find(Song.class, UUID.fromString("be368679-7d17-4590-85fb-49cc71c2c34e"));
-        Song song4 = entityManager.find(Song.class, UUID.fromString("c0c26e68-5220-4d5b-ae42-e7909597e1a8"));
-        Song song5 = entityManager.find(Song.class, UUID.fromString("a750cb1d-2453-4a61-9bf0-d1c1c9c3b2c0"));
-        Song song6 = entityManager.find(Song.class, UUID.fromString("2de8c7b5-8ad7-42a7-b45f-c8d77f994fd6"));
-        Song song7 = entityManager.find(Song.class, UUID.fromString("f24eb0eb-dd92-47ac-a578-2487ea3b062f"));
-        Song song8 = entityManager.find(Song.class, UUID.fromString("606987ba-1016-4d32-8aa1-6a3f840f7b47"));
-
-        artist.getSingSong().add(song1);
-        artist.getSingSong().add(song2);
-        artist.getSingSong().add(song3);
-        artist.getSingSong().add(song4);
-        artist.getSingSong().add(song5);
-        artist.getSingSong().add(song6);
-        artist.getSingSong().add(song7);
         artist.getSingSong().add(song8);
         Assertions.assertNotNull(artist.getSingSong());
 
@@ -245,7 +228,7 @@ class ArtisAlbumSongTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Song song = entityManager.find(Song.class, UUID.fromString("a9c58ef4-3dbe-4d88-aa00-886220c7ad84"));
+        Song song = entityManager.find(Song.class, UUID.fromString("9b90378b-77f1-4da1-94f2-034dde04c31d"));
         Assertions.assertNotNull(song.getAlbum());
         Assertions.assertEquals(8, song.getAlbum().getSongs().size());
         Assertions.assertEquals("We're Invincible", song.getAlbum().getSongs().get(0).getTitle());
@@ -297,7 +280,7 @@ class ArtisAlbumSongTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Artist artist = entityManager.find(Artist.class, UUID.fromString("d92f445d-15f4-465a-bbd0-fbee14b3aa86"));
+        Artist artist = entityManager.find(Artist.class, UUID.fromString("9798d12c-386d-47d4-b3e1-1d78be2e9be0"));
         artist.setPerforms(new HashSet<>());
 
         Concert concert1 = entityManager.find(Concert.class, UUID.fromString("6a1afe0d-ced7-44eb-9a74-d28ebfd41f11"));

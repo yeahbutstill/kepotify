@@ -4,7 +4,6 @@ import com.yeahbutstill.kepotify.entity.Response;
 import com.yeahbutstill.kepotify.entity.Users;
 import com.yeahbutstill.kepotify.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +16,11 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-    @Autowired
-    private UserServiceImpl userService;
+    private final UserServiceImpl userService;
+
+    public UserController(UserServiceImpl userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/list")
     public ResponseEntity<Response> getUsers() {

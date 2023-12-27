@@ -3,7 +3,7 @@ package com.yeahbutstill.kepotify.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @Table(name = "transactions")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @SQLDelete(sql = "UPDATE transactions SET status_record='INACTIVE' WHERE id=?")
-@Where(clause = "status_record='ACTIVE'")
+@SQLRestriction(value = "status_record='ACTIVE'")
 public class Transaction extends AuditTableEntity<UUID> {
 
     @Column(name = "balance")

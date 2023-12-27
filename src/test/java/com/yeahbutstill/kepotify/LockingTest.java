@@ -57,7 +57,7 @@ class LockingTest {
         entityTransaction.begin();
 
         TransactionCredit transactionCredit = entityManager
-                .find(TransactionCredit.class, UUID.fromString("02030e1b-343a-4534-b1c2-2022a2d184f4"));
+                .find(TransactionCredit.class, UUID.fromString("14c5e083-54da-43ac-8b61-81f36c126ffc"));
         transactionCredit.setBalance(new BigDecimal(6000));
 
         // nunggu 10 detik sebelum commit
@@ -79,7 +79,7 @@ class LockingTest {
         entityTransaction.begin();
 
         TransactionCredit transactionCredit = entityManager
-                .find(TransactionCredit.class, UUID.fromString("02030e1b-343a-4534-b1c2-2022a2d184f4"));
+                .find(TransactionCredit.class, UUID.fromString("14c5e083-54da-43ac-8b61-81f36c126ffc"));
         transactionCredit.setBalance(new BigDecimal(5000));
 
         entityManager.persist(transactionCredit);
@@ -100,7 +100,7 @@ class LockingTest {
 
         TransactionCredit transactionCredit = entityManager
                 .find(TransactionCredit.class,
-                        UUID.fromString("e0c04ea6-e7b3-4009-8e37-3b3a7aa7c537"),
+                        UUID.fromString("14c5e083-54da-43ac-8b61-81f36c126ffc"),
                         LockModeType.PESSIMISTIC_WRITE);
         transactionCredit.setBalance(new BigDecimal(50_000));
         Thread.sleep(10 * 1000L);
@@ -121,7 +121,7 @@ class LockingTest {
 
         TransactionCredit transactionCredit = entityManager
                 .find(TransactionCredit.class,
-                        UUID.fromString("e0c04ea6-e7b3-4009-8e37-3b3a7aa7c537"),
+                        UUID.fromString("14c5e083-54da-43ac-8b61-81f36c126ffc"),
                         LockModeType.PESSIMISTIC_WRITE);
         transactionCredit.setBalance(new BigDecimal(5_000_000));
         entityManager.persist(transactionCredit);

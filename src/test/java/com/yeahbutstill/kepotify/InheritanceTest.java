@@ -63,10 +63,10 @@ class InheritanceTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Premium premium = entityManager.find(Premium.class, UUID.fromString("183dcfbd-82cb-4c6f-92b4-3f0ecd68e8cc"));
+        Premium premium = entityManager.find(Premium.class, UUID.fromString("db3023a9-1dfd-4466-ad88-e4fd747b7353"));
         Assertions.assertEquals("Lah", premium.getName());
 
-        Users users = entityManager.find(Users.class, UUID.fromString("7e907093-3a1d-433f-82bf-53982e592c75"));
+        Users users = entityManager.find(Users.class, UUID.fromString("a9d4e318-20ad-4517-874e-fff450a68c75"));
         Vip vip = (Vip) users;
         Assertions.assertEquals("Loh", vip.getName());
 
@@ -114,10 +114,10 @@ class InheritanceTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Payment payment = entityManager.find(Payment.class, UUID.fromString("3d039b9f-5a78-4331-8661-19e830cc95a5"));
+        Payment payment = entityManager.find(Payment.class, UUID.fromString("385af961-fc0c-417f-ac63-9194960e1afe"));
         PaymentGopay paymentGopay = (PaymentGopay) payment;
-        PaymentGopay findPaymentGopay = entityManager.find(PaymentGopay.class, UUID.fromString("3d039b9f-5a78-4331-8661-19e830cc95a5"));
-        PaymentCreditCard findPaymentCreditCard = entityManager.find(PaymentCreditCard.class, UUID.fromString("121636c0-7682-4e09-833d-856368700055"));
+        PaymentGopay findPaymentGopay = entityManager.find(PaymentGopay.class, UUID.fromString("385af961-fc0c-417f-ac63-9194960e1afe"));
+        PaymentCreditCard findPaymentCreditCard = entityManager.find(PaymentCreditCard.class, UUID.fromString("af220d5d-0131-43dd-b9bd-146895a6da6c"));
 
         Assertions.assertEquals(paymentGopay.getId(), payment.getId());
         Assertions.assertEquals(paymentGopay.getGopayId(), findPaymentGopay.getGopayId());
@@ -167,8 +167,8 @@ class InheritanceTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        TransactionDebit transactionDebit = entityManager.find(TransactionDebit.class, UUID.fromString("72b85fa4-eb83-4564-9e39-d0a8626019e0"));
-        TransactionCredit transactionCredit = entityManager.find(TransactionCredit.class, UUID.fromString("75b0997a-a2c3-49e0-bc11-7e3ca007bb07"));
+        TransactionDebit transactionDebit = entityManager.find(TransactionDebit.class, UUID.fromString("dce82e1d-e059-4531-af3f-1404759d50ed"));
+        TransactionCredit transactionCredit = entityManager.find(TransactionCredit.class, UUID.fromString("14c5e083-54da-43ac-8b61-81f36c126ffc"));
         Assertions.assertNotNull(transactionDebit);
         Assertions.assertNotNull(transactionCredit);
 

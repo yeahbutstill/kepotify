@@ -8,11 +8,9 @@ import jakarta.persistence.EntityTransaction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.File;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.UUID;
@@ -49,7 +47,7 @@ class UsersFollowTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Users users = entityManager.find(Users.class, UUID.fromString("1da6de12-fcf9-4240-97ca-3e85684b670c"));
+        Users users = entityManager.find(Users.class, UUID.fromString("e968af07-dd64-4c09-989e-6e70829aef08"));
         users.setName("Turu");
         users.setEmail("turu@gmail.com");
         users.setPassword("turu terus");
@@ -71,7 +69,7 @@ class UsersFollowTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Users users = entityManager.find(Users.class, UUID.fromString("1da6de12-fcf9-4240-97ca-3e85684b670c"));
+        Users users = entityManager.find(Users.class, UUID.fromString("e968af07-dd64-4c09-989e-6e70829aef08"));
         Assertions.assertNotNull(users);
         Assertions.assertEquals("Turu, turu@gmail.com, 1980-09-01", users.getUserDetails());
 
@@ -88,10 +86,10 @@ class UsersFollowTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Users users = entityManager.find(Users.class, UUID.fromString("1da6de12-fcf9-4240-97ca-3e85684b670c"));
+        Users users = entityManager.find(Users.class, UUID.fromString("e968af07-dd64-4c09-989e-6e70829aef08"));
         users.setFollowArtist(new HashSet<>());
 
-        Artist artist = entityManager.find(Artist.class, UUID.fromString("d92f445d-15f4-465a-bbd0-fbee14b3aa86"));
+        Artist artist = entityManager.find(Artist.class, UUID.fromString("9798d12c-386d-47d4-b3e1-1d78be2e9be0"));
 
         users.getFollowArtist().add(artist);
         Assertions.assertNotNull(users);
@@ -111,15 +109,16 @@ class UsersFollowTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Users users = entityManager.find(Users.class, UUID.fromString("1da6de12-fcf9-4240-97ca-3e85684b670c"));
+        Users users = entityManager.find(Users.class, UUID.fromString("e968af07-dd64-4c09-989e-6e70829aef08"));
         users.setFollowArtist(new HashSet<>());
 
-        Playlist playlist = entityManager.find(Playlist.class, UUID.fromString("587016cc-3c8c-4da2-9a26-76d7cb3d374e"));
+        Playlist playlist = entityManager.find(Playlist.class, UUID.fromString("dbc474ba-5ffe-47cd-ae29-dda1387d81fd"));
 
         users.getFollowPlaylist().add(playlist);
+
+        entityManager.persist(users);
         Assertions.assertNotNull(users);
         Assertions.assertNotNull(playlist);
-        entityManager.persist(users);
 
         transaction.commit();
         entityManager.close();
@@ -127,41 +126,31 @@ class UsersFollowTest {
     }
 
     @Test
-    void testCreatePlaylist() throws IOException {
+    void testCreatePlaylist() {
 
         EntityManagerFactory entityManagerFactory = JpaUtil.getEntityManagerFactory();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Users turu = entityManager.find(Users.class, UUID.fromString("1da6de12-fcf9-4240-97ca-3e85684b670c"));
+        Users turu = entityManager.find(Users.class, UUID.fromString("e968af07-dd64-4c09-989e-6e70829aef08"));
 
         PlaylistCategorie hardcore = new PlaylistCategorie();
         hardcore.setName("Jakarta Hardcore");
-        String imageBytes = Arrays.toString(
-                Files.readAllBytes(
-                        Path.of(
-                                Objects.requireNonNull(getClass().getResource("/images/a0193793750_16.jpg"))
-                                        .getPath()
-                        )
-                )
-        );
-        hardcore.setImage(imageBytes);
-        hardcore.setIcon(imageBytes);
+        Path path = new File(Objects.requireNonNull(getClass()
+                        .getResource("/images/a4186047900_10.jpg"))
+                .getFile()).toPath();
+        hardcore.setImage(String.valueOf(path));
+        hardcore.setIcon(String.valueOf(path));
         entityManager.persist(hardcore);
 
         Playlist playlist1 = new Playlist();
         playlist1.setName("Hardcore Aja Nich 3");
         playlist1.setDescription("Kumpulan lagu jakarta hardcore");
-        String imageBytes1 = Arrays.toString(
-                Files.readAllBytes(
-                        Path.of(
-                                Objects.requireNonNull(getClass().getResource("/images/a0193793750_16.jpg"))
-                                        .getPath()
-                        )
-                )
-        );
-        playlist1.setImage(imageBytes1);
+        Path path1 = new File(Objects.requireNonNull(getClass()
+                        .getResource("/images/a4186047900_10.jpg"))
+                .getFile()).toPath();
+        playlist1.setImage(String.valueOf(path1));
         playlist1.setUserPlaylists(turu);
         playlist1.setPlaylistCategories(hardcore);
         entityManager.persist(playlist1);
@@ -182,11 +171,11 @@ class UsersFollowTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Playlist playlist = entityManager.find(Playlist.class, UUID.fromString("fd71ff34-d845-4e74-ba69-c8cfc93600cf"));
-        Song song1 = entityManager.find(Song.class, UUID.fromString("606987ba-1016-4d32-8aa1-6a3f840f7b47"));
-        Song song2 = entityManager.find(Song.class, UUID.fromString("f24eb0eb-dd92-47ac-a578-2487ea3b062f"));
-        Song song3 = entityManager.find(Song.class, UUID.fromString("2de8c7b5-8ad7-42a7-b45f-c8d77f994fd6"));
-        Song song4 = entityManager.find(Song.class, UUID.fromString("a750cb1d-2453-4a61-9bf0-d1c1c9c3b2c0"));
+        Playlist playlist = entityManager.find(Playlist.class, UUID.fromString("129efe1d-d02d-4e0b-9651-85738a4b3d51"));
+        Song song1 = entityManager.find(Song.class, UUID.fromString("e9674617-d36e-450a-b84c-f2af73b6bc85"));
+        Song song2 = entityManager.find(Song.class, UUID.fromString("8b435a42-0caa-46e3-9007-c79793b75701"));
+        Song song3 = entityManager.find(Song.class, UUID.fromString("57cedceb-ae63-47d0-b24d-c3a2058ac259"));
+        Song song4 = entityManager.find(Song.class, UUID.fromString("b020003d-79aa-4346-bf04-028d33d1324b"));
 
         playlist.setContainSong(new HashSet<>());
         playlist.getContainSong().add(song1);
@@ -215,7 +204,7 @@ class UsersFollowTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Playlist playlist = entityManager.find(Playlist.class, UUID.fromString("fd71ff34-d845-4e74-ba69-c8cfc93600cf"));
+        Playlist playlist = entityManager.find(Playlist.class, UUID.fromString("dbc474ba-5ffe-47cd-ae29-dda1387d81fd"));
 
         playlist.getContainSong().forEach(song -> {
             System.out.println(song.getAlbum().getTitle());

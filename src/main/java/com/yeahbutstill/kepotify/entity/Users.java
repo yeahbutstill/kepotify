@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.UUID;
 @DiscriminatorValue("BASIC")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @SQLDelete(sql = "UPDATE users SET status_record='INACTIVE' WHERE id=?")
-@Where(clause = "status_record='ACTIVE'")
+@SQLRestriction(value = "status_record='ACTIVE'")
 public class Users extends AuditTableEntity<UUID> {
 
     @NotEmpty

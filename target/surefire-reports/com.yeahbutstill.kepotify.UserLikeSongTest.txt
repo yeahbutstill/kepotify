@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: com.yeahbutstill.kepotify.UserLikeSongTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.071 s <<< FAILURE! -- in com.yeahbutstill.kepotify.UserLikeSongTest
+com.yeahbutstill.kepotify.UserLikeSongTest.testUserLikeSong -- Time elapsed: 0.071 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.Users.setLikes(java.util.Set)" because "user" is null
+	at com.yeahbutstill.kepotify.UserLikeSongTest.testUserLikeSong(UserLikeSongTest.java:26)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

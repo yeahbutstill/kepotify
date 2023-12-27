@@ -22,10 +22,10 @@ class UserLikeSongTest {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        Users user = entityManager.find(Users.class, UUID.fromString("1da6de12-fcf9-4240-97ca-3e85684b670c"));
+        Users user = entityManager.find(Users.class, UUID.fromString("db3023a9-1dfd-4466-ad88-e4fd747b7353"));
         user.setLikes(new HashSet<>());
-        user.getLikes().add(entityManager.find(Song.class, UUID.fromString("cb4ca109-3eee-4d9b-884b-875a52d0cecd")));
-        user.getLikes().add(entityManager.find(Song.class, UUID.fromString("f24eb0eb-dd92-47ac-a578-2487ea3b062f")));
+        user.getLikes().add(entityManager.find(Song.class, UUID.fromString("9b90378b-77f1-4da1-94f2-034dde04c31d")));
+        user.getLikes().add(entityManager.find(Song.class, UUID.fromString("9e1deea6-2194-427f-8cfa-12ffac980ae5")));
 
         entityManager.merge(user);
         Assertions.assertNotNull(user.getLikes());

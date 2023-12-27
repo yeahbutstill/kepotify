@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.Objects;
 import java.util.Set;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @Builder
 @Table(name = "songs")
 @SQLDelete(sql = "UPDATE songs SET status_record='INACTIVE' WHERE id=?")
-@Where(clause = "status_record='ACTIVE'")
+@SQLRestriction(value = "status_record='ACTIVE'")
 public class Song extends AuditTableEntity<UUID> {
 
     private String title;

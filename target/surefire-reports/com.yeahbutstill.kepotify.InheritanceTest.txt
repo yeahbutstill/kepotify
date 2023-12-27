@@ -1,0 +1,31 @@
+-------------------------------------------------------------------------------
+Test set: com.yeahbutstill.kepotify.InheritanceTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 1, Errors: 2, Skipped: 0, Time elapsed: 0.500 s <<< FAILURE! -- in com.yeahbutstill.kepotify.InheritanceTest
+com.yeahbutstill.kepotify.InheritanceTest.testFindPaymentTypeJoinTable -- Time elapsed: 0.016 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.PaymentGopay.getId()" because "paymentGopay" is null
+	at com.yeahbutstill.kepotify.InheritanceTest.testFindPaymentTypeJoinTable(InheritanceTest.java:122)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.yeahbutstill.kepotify.InheritanceTest.testFindUserMemberTypeSingleTable -- Time elapsed: 0.087 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.Premium.getName()" because "premium" is null
+	at com.yeahbutstill.kepotify.InheritanceTest.testFindUserMemberTypeSingleTable(InheritanceTest.java:67)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.yeahbutstill.kepotify.InheritanceTest.testFindChildTransactionsTypeSingleTable -- Time elapsed: 0.134 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: not <null>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertNotNull.failNull(AssertNotNull.java:49)
+	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
+	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:30)
+	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:304)
+	at com.yeahbutstill.kepotify.InheritanceTest.testFindChildTransactionsTypeSingleTable(InheritanceTest.java:172)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

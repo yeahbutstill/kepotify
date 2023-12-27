@@ -1,0 +1,32 @@
+-------------------------------------------------------------------------------
+Test set: com.yeahbutstill.kepotify.LockingTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 0.299 s <<< FAILURE! -- in com.yeahbutstill.kepotify.LockingTest
+com.yeahbutstill.kepotify.LockingTest.testUpdatePessimisticLocking1 -- Time elapsed: 0.019 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.TransactionCredit.setBalance(java.math.BigDecimal)" because "transactionCredit" is null
+	at com.yeahbutstill.kepotify.LockingTest.testUpdatePessimisticLocking1(LockingTest.java:105)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.yeahbutstill.kepotify.LockingTest.testUpdatePessimisticLocking2 -- Time elapsed: 0.072 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.TransactionCredit.setBalance(java.math.BigDecimal)" because "transactionCredit" is null
+	at com.yeahbutstill.kepotify.LockingTest.testUpdatePessimisticLocking2(LockingTest.java:126)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.yeahbutstill.kepotify.LockingTest.testUpdateOptimisticLocking1 -- Time elapsed: 0.088 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.TransactionCredit.setBalance(java.math.BigDecimal)" because "transactionCredit" is null
+	at com.yeahbutstill.kepotify.LockingTest.testUpdateOptimisticLocking1(LockingTest.java:61)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.yeahbutstill.kepotify.LockingTest.testUpdateOptimisticLocking2 -- Time elapsed: 0.081 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.yeahbutstill.kepotify.entity.TransactionCredit.setBalance(java.math.BigDecimal)" because "transactionCredit" is null
+	at com.yeahbutstill.kepotify.LockingTest.testUpdateOptimisticLocking2(LockingTest.java:83)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

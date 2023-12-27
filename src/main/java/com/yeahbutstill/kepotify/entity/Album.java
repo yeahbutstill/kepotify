@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.Year;
 import java.util.List;
@@ -22,12 +22,13 @@ import java.util.UUID;
 @Builder
 @Table(name = "albums")
 @SQLDelete(sql = "UPDATE albums SET status_record='INACTIVE' WHERE id=?")
-@Where(clause = "status_record='ACTIVE'")
+@SQLRestriction(value = "status_record='ACTIVE'")
 public class Album extends AuditTableEntity<UUID> {
 
     private String title;
 
     @Lob
+    @Column(columnDefinition = "text")
     private String image;
 
     @Convert(converter = YearAttributeConverter.class)

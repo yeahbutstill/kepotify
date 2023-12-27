@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
 
@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "transactions_debit")
 @SQLDelete(sql = "UPDATE transactions_debit SET status_record='INACTIVE' WHERE id=?")
-@Where(clause = "status_record='ACTIVE'")
+@SQLRestriction(value = "status_record='ACTIVE'")
 public class TransactionDebit extends Transaction{
 
     @Column(name = "debit_amount")
