@@ -8,6 +8,10 @@
 /dataSources.local.xml
 # Zeppelin ignored files
 /ZeppelinRemoteNotebooks/
+
+### Docker
 /kepotifydb-data/
+
+### IDE Jetbrian
 .idea
 src/main/resources/env.properties
