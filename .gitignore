@@ -9,5 +9,5 @@
 # Zeppelin ignored files
 /ZeppelinRemoteNotebooks/
 /kepotifydb-data/
-/.idea/
-/src/main/resources/env.properties
+.idea
+src/main/resources/env.properties
